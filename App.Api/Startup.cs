@@ -1,17 +1,12 @@
+using App.Api.Extensions;
 using App.External.Email;
-using App.Identity;
 using App.Identity.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 
 namespace App.Api
 {
@@ -27,48 +22,18 @@ namespace App.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //configure entity framecore
-            services.AddDbContext<IdentityContext>(
-                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
-
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequiredLength = 5;
-
-            }).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
-
-            services.AddAuthentication(auth =>
-            {
-                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["AuthSettings:Audience"],
-                    ValidIssuer = Configuration["AuthSettings:Issuer"],
-                    RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthSettings:Key"])),
-                    ValidateIssuerSigningKey = true
-                };
-            });
-
+            services.AddDatabase(Configuration);
+            services.UseIdentity();
+            services.UseAuthentication(Configuration);
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IMailService, MailService>();
-
             services.AddControllers();
             services.AddRazorPages();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
             });
+            services.UseHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +60,7 @@ namespace App.Api
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
