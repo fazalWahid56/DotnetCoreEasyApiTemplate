@@ -27,11 +27,9 @@ namespace App.Api
             services.UseIdentity();
             services.UseAuthentication(Configuration);
             services.AddScoped<IIdentityService, IdentityService>();
-            services.AddTransient<IMailService, MailService>();
-           
+            services.AddTransient<IMailService, MailService>();          
             services.AddControllers();
-            services.AddRazorPages();
-           
+            services.AddRazorPages();     
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
@@ -50,7 +48,6 @@ namespace App.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "App.Api v1"));
             }
-
 
 
             app.UseStaticFiles();
