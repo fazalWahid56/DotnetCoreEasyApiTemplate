@@ -58,7 +58,7 @@ namespace App.Identity.Services
 
                 return new CustomResponse
                 {
-                    Message = "User created successfully!",
+                    token = "User created successfully!",
                     IsSuccess = true,
                 };
             }
@@ -101,12 +101,12 @@ namespace App.Identity.Services
 
             return new CustomResponse
             {
-                Message = tokenAsString,
+                email = user.Email,
+                username = user.UserName,
+                token = tokenAsString,
                 IsSuccess = true,
                 ExpireDate = token.ValidTo
             };
-
-
         }
 
         public async Task<CustomResponse> ConfirmEmailAsync(string userId, string token)
@@ -123,7 +123,7 @@ namespace App.Identity.Services
             if (result.Succeeded)
                 return new CustomResponse
                 {
-                    Message = "Email confirmed successfully!",
+                    token = "Email confirmed successfully!",
                     IsSuccess = true,
                 };
 
@@ -148,7 +148,7 @@ namespace App.Identity.Services
             return new CustomResponse
             {
                 IsSuccess = true,
-                Message = "Reset password URL has been sent to the email successfully!"
+                token = "Reset password URL has been sent to the email successfully!"
             };
         }
 
@@ -169,7 +169,7 @@ namespace App.Identity.Services
             if (result.Succeeded)
                 return new CustomResponse
                 {
-                    Message = "Password has been reset successfully!",
+                    token = "Password has been reset successfully!",
                     IsSuccess = true,
                 };
 
