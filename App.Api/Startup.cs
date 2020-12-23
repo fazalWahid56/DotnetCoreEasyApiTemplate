@@ -22,13 +22,16 @@ namespace App.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddDatabase(Configuration);
             services.UseIdentity();
             services.UseAuthentication(Configuration);
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IMailService, MailService>();
+           
             services.AddControllers();
             services.AddRazorPages();
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
@@ -49,10 +52,12 @@ namespace App.Api
             }
 
 
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyMethod());
             app.UseAuthentication();
             app.UseAuthorization();
 
