@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Services.Tests", "App.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "Blazor.Client\Blazor.Client.csproj", "{F6448F62-BCB0-4C4D-B804-CFF8E1189CB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Client", "App.Client\App.Client.csproj", "{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Client", "App.Client\App.Client.csproj", "{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Db", "App.Db\App.Db.csproj", "{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

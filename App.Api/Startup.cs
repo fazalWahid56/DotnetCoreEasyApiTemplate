@@ -25,9 +25,7 @@ namespace App.Api
             services.AddCors();
             services.AddDatabase(Configuration);
             services.UseIdentity();
-            services.UseAuthentication(Configuration);
-            services.AddScoped<IIdentityService, IdentityService>();
-            services.AddTransient<IMailService, MailService>();          
+            services.UseAuthentication(Configuration);   
             services.AddControllers();
             services.AddRazorPages();     
             services.AddSwaggerGen(c =>
@@ -35,6 +33,9 @@ namespace App.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
             });
             services.UseHealthChecks();
+
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddTransient<IMailService, MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

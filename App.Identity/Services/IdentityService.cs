@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using App.Utilites.Exceptions;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace App.Identity.Services
 {
@@ -174,6 +176,12 @@ namespace App.Identity.Services
                 };
 
             throw new HttpStatusException(System.Net.HttpStatusCode.BadRequest, JsonConvert.SerializeObject(result.Errors));
+        }
+
+        public async Task<List<IdentityUser>> GetAllAsync()
+        {
+            var users = await _userManger.Users.ToListAsync();
+            return users;                       
         }
     }
 }

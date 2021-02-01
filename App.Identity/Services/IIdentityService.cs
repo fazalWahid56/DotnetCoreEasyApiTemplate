@@ -1,8 +1,7 @@
 ﻿using App.Entites.SharedModels;
-using System;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
 
 namespace App.Identity.Services
@@ -18,5 +17,7 @@ namespace App.Identity.Services
         Task<CustomResponse> ForgetPasswordAsync(string email);
 
         Task<CustomResponse> ResetPasswordAsync(ResetPasswordModel model);
+
+        Task<List<IdentityUser>> GetAllAsync();
     }
 }

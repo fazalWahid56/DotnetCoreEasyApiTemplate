@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\App.Db\App.Db.csproj" />
     <ProjectReference Include="..\App.Entites\App.Entites.csproj" />
     <ProjectReference Include="..\App.Identity\App.Identity.csproj" />
     <ProjectReference Include="..\App.Utilites\App.Utilites.csproj" />

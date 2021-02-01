@@ -3,7 +3,6 @@ using App.External.Email;
 using App.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +11,7 @@ namespace App.Api.Controllers.v1.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize]
     public class UserController : ControllerBase
     {
 
@@ -92,6 +92,13 @@ namespace App.Api.Controllers.v1.Identity
             }
 
             return BadRequest("Some properties are not valid");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {     
+            var result = await _identityService.GetAllAsync();
+            return Ok(result);        
         }
     }
 }
