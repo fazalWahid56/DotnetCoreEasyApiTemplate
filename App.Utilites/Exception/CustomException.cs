@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace App.Utilites.Exceptions
@@ -22,7 +23,7 @@ namespace App.Utilites.Exceptions
     }
 
 
-    public class NotFoundException : Exception
+    public class NotFoundException : KeyNotFoundException
     {
         public NotFoundException(string msg) : base(msg)
         {

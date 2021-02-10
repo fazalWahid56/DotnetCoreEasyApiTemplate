@@ -1,6 +1,9 @@
 using App.Api.Extensions;
+using App.Db.Repositories;
 using App.External.Email;
 using App.Identity.Services;
+using App.Services;
+using App.Services.GeneralLeadger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,17 +28,32 @@ namespace App.Api
             services.AddCors();
             services.AddDatabase(Configuration);
             services.UseIdentity();
-            services.UseAuthentication(Configuration);   
-            services.AddControllers();
+            services.UseAuthentication(Configuration);
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddRazorPages();     
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App.Api", Version = "v1" });
             });
             services.UseHealthChecks();
+            services.AddAutomapper();
 
+
+            //service
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IGeneralLedgerService, GeneralLedgerService>();
+            services.AddTransient<IVoucherService, VoucherService>();
+            
+            //repositories
+            services.AddTransient<IChartOfAccountRepository , ChartOfAccountRepository>();
+            services.AddTransient<IAccountNatureRepository, AccountNatureRepository>();
+            services.AddTransient<IVoucherTypeRepository, VoucherTypeRepository>();
+            services.AddTransient<IVoucherRepository, VoucherRepository>();
+            services.AddTransient<IGeneralLedgerRepository, GeneralLedgerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

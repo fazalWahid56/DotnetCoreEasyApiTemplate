@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Api.Controllers.v1
 {
@@ -51,10 +47,6 @@ namespace App.Api.Controllers.v1
             return StatusCode(code, exception.Message);
         }
 
-        private void CustomException(string message)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

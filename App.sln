@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.External", "App.Externa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B1CAC082-D9D7-4AF7-91D8-D6EC7C2FFC49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Tests", "App.Tests\App.Tests.csproj", "{60085E80-CCF3-4042-A7BD-E26D72C40FCD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Identity.Tests", "App.Identity.Test\App.Identity.Tests.csproj", "{1B571F47-B58D-4C15-91CC-9F4F5D024699}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Services.Tests", "App.Services.Tests\App.Services.Tests.csproj", "{F736BF2A-2D19-456A-A4E4-D32AA6C5367D}"
@@ -27,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Client", "Blazor.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Client", "App.Client\App.Client.csproj", "{3E52FB19-B851-43C8-AC7A-1E1A407C01DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Db", "App.Db\App.Db.csproj", "{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Db", "App.Db\App.Db.csproj", "{AFBB8790-ECBF-4D52-A71B-55BAEFD64957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +57,6 @@ Global
 		{D5527954-62FA-4ED9-AF52-5437514049FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5527954-62FA-4ED9-AF52-5437514049FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5527954-62FA-4ED9-AF52-5437514049FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60085E80-CCF3-4042-A7BD-E26D72C40FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60085E80-CCF3-4042-A7BD-E26D72C40FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60085E80-CCF3-4042-A7BD-E26D72C40FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60085E80-CCF3-4042-A7BD-E26D72C40FCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B571F47-B58D-4C15-91CC-9F4F5D024699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B571F47-B58D-4C15-91CC-9F4F5D024699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B571F47-B58D-4C15-91CC-9F4F5D024699}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,7 +82,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{60085E80-CCF3-4042-A7BD-E26D72C40FCD} = {B1CAC082-D9D7-4AF7-91D8-D6EC7C2FFC49}
 		{1B571F47-B58D-4C15-91CC-9F4F5D024699} = {B1CAC082-D9D7-4AF7-91D8-D6EC7C2FFC49}
 		{F736BF2A-2D19-456A-A4E4-D32AA6C5367D} = {B1CAC082-D9D7-4AF7-91D8-D6EC7C2FFC49}
 	EndGlobalSection

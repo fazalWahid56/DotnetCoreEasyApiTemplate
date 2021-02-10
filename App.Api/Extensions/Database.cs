@@ -14,7 +14,7 @@ namespace App.Api.Extensions
             services.AddDbContext<IdentityContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<AppContext>(
+            services.AddDbContext<AppDbContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));            
             return services;
         }
