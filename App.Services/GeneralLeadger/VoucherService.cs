@@ -4,6 +4,8 @@ using App.Entites.DTO;
 using AutoMapper;
 using App.Db.Tables;
 using App.Db.Repositories;
+using System;
+using System.Linq;
 
 namespace App.Services.GeneralLeadger
 {
@@ -33,6 +35,7 @@ namespace App.Services.GeneralLeadger
         }
         public async Task<VoucherDTO> CreateVoucherAsync(VoucherDTO voucherDTO)
         {
+            voucherDTO.VoucherNo = await GetVoucherNumber("BPV",DateTime.Now);
             var voucher = _mapper.Map<Voucher>(voucherDTO);
             await _voucherRepo.CreateAsync(voucher);
             return _mapper.Map<VoucherDTO>(voucher);
@@ -48,6 +51,26 @@ namespace App.Services.GeneralLeadger
         public async Task<bool> DeleteVoucherAsync(int voucherId)
         {
             return await _voucherRepo.DeleteAsync(voucherId);
+        }
+
+        private async Task<string> GetVoucherNumber(string voucherType, DateTime date)
+        {
+            string dateMonth = date.ToString("MMM");
+            string dateYear = date.Year.ToString();
+            string newVoucher = voucherType + "-" + dateYear + "/" + dateMonth+"/";
+            //BPV-2021/Feb/001
+
+            //Get last Voucher number
+            var vouchers = await _voucherRepo.FindAsync(a=>a.VoucherNo.Contains(dateYear+"/"+dateMonth));
+          //  vouchers = vouchers.OrderByDescending(a => a.CreatedDate).ToList();
+            if (vouchers.Any())
+            {
+                string preVoucherNo = vouchers.OrderByDescending(a => a.CreatedDate).ToList().FirstOrDefault().VoucherNo;
+                int count = Convert.ToInt32(preVoucherNo.Split('/')[2]);
+                count = ++count;
+                return newVoucher + count;
+            }
+            return  newVoucher + "1";
         }
         #endregion
 
@@ -86,6 +109,7 @@ namespace App.Services.GeneralLeadger
         {
             return await _vouchTypeRepo.DeleteAsync(voucherNatureId);
         }
+        
         #endregion
     }
 }

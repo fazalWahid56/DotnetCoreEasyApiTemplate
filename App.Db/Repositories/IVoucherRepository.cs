@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,5 +15,6 @@ namespace App.Db.Repositories
         public Task<Voucher> CreateAsync(Voucher accountDTO);
         public Task<Voucher> UpdateAsync(Voucher accountDTO);
         public Task<bool> DeleteAsync(int accountId);
+        public Task<List<Voucher>> FindAsync(Expression<Func<Voucher, bool>> predicate);
     }
 }

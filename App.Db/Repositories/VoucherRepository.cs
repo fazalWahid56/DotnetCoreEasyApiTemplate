@@ -1,7 +1,9 @@
 ﻿using App.Db.Tables;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace App.Db.Repositories
@@ -16,6 +18,7 @@ namespace App.Db.Repositories
         }
         public async Task<Voucher> CreateAsync(Voucher voucher)
         {
+            voucher.CreatedDate = DateTime.Now;
             await _context.Vouchers.AddAsync(voucher);
             await _context.SaveChangesAsync();
             return voucher;
@@ -56,6 +59,15 @@ namespace App.Db.Repositories
             _context.Entry(voucher).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return voucher;
+        }
+        public async Task<List<Voucher>> FindAsync(Expression<Func<Voucher, bool>> predicate)
+        {
+            var account = await _context.Vouchers.Where(predicate).ToListAsync();           
+            if (account is not null || account.Any())
+            {
+                return account;
+            }
+            return new List<Voucher>();
         }
     }
 }
