@@ -23,7 +23,10 @@ namespace App.Db.Tables
         public string Year { get; set; }
         [Required]
         [ForeignKey("VoucherTypeId")]
-        public int VoucherTypeId { get; set; }     
+        public int VoucherTypeId { get; set; }
+        [ForeignKey("FirmId")]
+        public int? FirmId { get; set; }
+        public Firm Firm { get; set; }
         public VoucherType VoucherType { get; set; }
         public List<ChartOfAccount> ChartOfAccount { get; set; }
     }

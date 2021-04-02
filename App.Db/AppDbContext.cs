@@ -1,5 +1,6 @@
 ﻿using App.Db.Tables;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace App.Db
 {
@@ -14,5 +15,27 @@ namespace App.Db
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<GeneralLedger> GeneralLedger { get; set; }
 
+        private IDbContextTransaction _transaction;
+        public void BeginTransaction()
+        {
+            _transaction = Database.BeginTransaction();
+        }
+        public void Commit()
+        {
+            try
+            {
+                SaveChanges();
+                _transaction.Commit();
+            }
+            finally
+            {
+                _transaction.Dispose();
+            }
+        }
+        public void Rollback()
+        {
+            _transaction.Rollback();
+            _transaction.Dispose();
+        }
     }
 }

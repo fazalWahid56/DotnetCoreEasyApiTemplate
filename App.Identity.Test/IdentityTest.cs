@@ -11,23 +11,24 @@ using FluentAssertions;
 using System;
 using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
+using App.Identity.Models;
 
 namespace App.Identity.Test
 {
     [TestClass]
     public class IdentityTest
     {
-        private Mock<UserManager<IdentityUser>> userManagerService { get; set; }
+        private Mock<UserManager<ApplicationUser>> userManagerService { get; set; }
         private Mock<IConfigurationSection> mockConfSection { get; set; }
         private Mock<IMailService> mockEmailSerivce { get; set; }
-        private IdentityUser _user;
+        private ApplicationUser _user;
         string _password;
         string _EmailVarificationToken;
         [TestInitialize]
         public void SetUp()
         {
             //Mock User 
-            _user = new IdentityUser { Email = "test@email.com", Id = "TestUserId" };
+            _user = new ApplicationUser { Email = "test@email.com", Id = "TestUserId" };
             _password = "test123";
             _EmailVarificationToken = "TestToken";
             //Mock configurations 
@@ -41,32 +42,32 @@ namespace App.Identity.Test
             mockEmailSerivce = new Mock<IMailService>();
 
             //Mock User service
-            var userStoreMock = new Mock<IUserStore<IdentityUser>>();
-            userManagerService = new Mock<UserManager<IdentityUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
+            var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
+            userManagerService = new Mock<UserManager<ApplicationUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
             
-            userManagerService.Setup(user => user.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
+            userManagerService.Setup(user => user.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                  .ReturnsAsync(IdentityResult.Success);
             
-            userManagerService.Setup(user => user.GenerateEmailConfirmationTokenAsync(It.IsAny<IdentityUser>()))
+            userManagerService.Setup(user => user.GenerateEmailConfirmationTokenAsync(It.IsAny<ApplicationUser>()))
                  .Returns(Task.FromResult("testToken"));
             
             userManagerService.Setup(email => email.FindByEmailAsync(It.IsAny<string>()))
                  .ReturnsAsync((string param) => param.Equals(_user.Email)?_user:null);
             
-            userManagerService.Setup(pass => pass.CheckPasswordAsync(It.IsAny<IdentityUser>(), It.IsAny<string>() ))
-                 .ReturnsAsync( (IdentityUser usr, string pass ) => pass.Equals(_password)?true:false );
+            userManagerService.Setup(pass => pass.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>() ))
+                 .ReturnsAsync( (ApplicationUser usr, string pass ) => pass.Equals(_password)?true:false );
             
             userManagerService.Setup(id => id.FindByIdAsync(It.IsAny<string>()))
                  .ReturnsAsync((string param) => param.Equals(_user.Id)? _user : null);
             
-            userManagerService.Setup(pass => pass.ConfirmEmailAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
-                 .ReturnsAsync((IdentityUser usr, string token) => token.Equals(_EmailVarificationToken)  ? IdentityResult.Success : IdentityResult.Failed());
+            userManagerService.Setup(pass => pass.ConfirmEmailAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
+                 .ReturnsAsync((ApplicationUser usr, string token) => token.Equals(_EmailVarificationToken)  ? IdentityResult.Success : IdentityResult.Failed());
             
-            userManagerService.Setup(user => user.GeneratePasswordResetTokenAsync(It.IsAny<IdentityUser>()))
+            userManagerService.Setup(user => user.GeneratePasswordResetTokenAsync(It.IsAny<ApplicationUser>()))
             .Returns(Task.FromResult(_EmailVarificationToken));
 
-            userManagerService.Setup(pass => pass.ResetPasswordAsync(It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<string>()))
-                 .ReturnsAsync((IdentityUser usr, string token, string newPass) => token.Equals(_EmailVarificationToken) ? IdentityResult.Success : IdentityResult.Failed());
+            userManagerService.Setup(pass => pass.ResetPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>(), It.IsAny<string>()))
+                 .ReturnsAsync((ApplicationUser usr, string token, string newPass) => token.Equals(_EmailVarificationToken) ? IdentityResult.Success : IdentityResult.Failed());
             
         }
 

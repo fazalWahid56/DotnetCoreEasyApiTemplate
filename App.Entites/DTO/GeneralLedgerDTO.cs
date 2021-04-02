@@ -22,6 +22,8 @@ namespace App.Entites.DTO
         public VoucherDTO Voucher { get; set; }
         public AccountDTO AgainstAccount { get; set; }
         public AccountDTO FromAccount { get; set; }
+        public int? FirmId { get; set; }
+        public FirmDTO Firm { get; set; }
     }
     public class VoucherDTO
     {
@@ -40,6 +42,8 @@ namespace App.Entites.DTO
         [Required]
         public int VoucherTypeId { get; set; }
         public VoucherTypeDTO VoucherType { get; set; }
+        public int? FirmId { get; set; }
+        public FirmDTO Firm { get; set; }
     }
 
     public class VoucherTypeDTO

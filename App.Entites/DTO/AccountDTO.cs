@@ -17,6 +17,8 @@ namespace App.Entites.DTO
         public string AccountDescription { get; set; }
         public int AccountNatureId { get; set; }
         public AccountNatureDTO AccountNature { get; set; }
+        public int? FirmId { get; set; }
+        public FirmDTO Firm { get; set; }
     }
 
     public class AccountNatureDTO

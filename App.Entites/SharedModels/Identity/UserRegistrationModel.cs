@@ -25,5 +25,8 @@ namespace App.Entites.SharedModels
         [StringLength(100, MinimumLength = 5)]
         public virtual string UserName { get; set; }
 
+        [Required]
+        public int? FirmId { get; set; }
+
     }
 }

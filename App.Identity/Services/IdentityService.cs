@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.External.Email;
@@ -14,15 +13,16 @@ using App.Utilites.Exceptions;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using App.Identity.Models;
 
 namespace App.Identity.Services
 {
     public class IdentityService : IIdentityService
     {
-        private UserManager<IdentityUser> _userManger;
+        private UserManager<ApplicationUser> _userManger;
         private IConfiguration _configuration;
         private IMailService _mailService;
-        public IdentityService(UserManager<IdentityUser> userManager, IConfiguration configuration, IMailService mailService)
+        public IdentityService(UserManager<ApplicationUser> userManager, IConfiguration configuration, IMailService mailService)
         {
             _userManger = userManager;
             _configuration = configuration;
@@ -37,11 +37,11 @@ namespace App.Identity.Services
             if (model.Password != model.ConfirmPassword)
                 throw new HttpStatusException(System.Net.HttpStatusCode.BadRequest, "Confirm password doesn't match the password");
 
-
-            var identityUser = new IdentityUser
+            var identityUser = new ApplicationUser()
             {
                 Email = model.Email,
                 UserName = model.Email,
+                FirmId= model.FirmId
             };
 
             var result = await _userManger.CreateAsync(identityUser, model.Password);
@@ -87,7 +87,9 @@ namespace App.Identity.Services
             var claims = new[]
             {
                 new Claim("Email",  Convert.ToString(model.Email)),
-                new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
+                new Claim("UserId", Convert.ToString(user.Id)),
+                new Claim("FirmId", Convert.ToString(user.FirmId)),
+                 new Claim("UserName", Convert.ToString(user.UserName)),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
@@ -178,10 +180,10 @@ namespace App.Identity.Services
             throw new HttpStatusException(System.Net.HttpStatusCode.BadRequest, JsonConvert.SerializeObject(result.Errors));
         }
 
-        public async Task<List<IdentityUser>> GetAllAsync()
+        public async Task<List<ApplicationUser>> GetAllAsync()
         {
             var users = await _userManger.Users.ToListAsync();
-            return users;                       
+            return users;
         }
     }
 }

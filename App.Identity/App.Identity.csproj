@@ -23,8 +23,4 @@
     <ProjectReference Include="..\App.Utilites\App.Utilites.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

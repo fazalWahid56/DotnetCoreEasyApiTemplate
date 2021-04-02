@@ -4,6 +4,7 @@ using App.External.Email;
 using App.Identity.Services;
 using App.Services;
 using App.Services.GeneralLeadger;
+using App.Utilites.ClaimPrinciple;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,12 +42,17 @@ namespace App.Api
             services.AddAutomapper();
 
 
+            //helpers
+            services.AddScoped<IClaimPrinciple, ClaimPrinciple>();
+
+
             //service
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IGeneralLedgerService, GeneralLedgerService>();
             services.AddTransient<IVoucherService, VoucherService>();
+
             
             //repositories
             services.AddTransient<IChartOfAccountRepository , ChartOfAccountRepository>();

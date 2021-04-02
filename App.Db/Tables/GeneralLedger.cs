@@ -23,6 +23,9 @@ namespace App.Db.Tables
         [Required]
         [ForeignKey("VoucherId")]
         public int VoucherId { get; set; }
+        [ForeignKey("FirmId")]
+        public int? FirmId { get; set; }
+        public Firm Firm { get; set; }
         public Voucher Voucher { get; set; }
         public ChartOfAccount AgainstAccount { get; set; }
         public ChartOfAccount FromAccount { get; set; }

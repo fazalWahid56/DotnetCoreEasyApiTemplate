@@ -11,10 +11,10 @@ namespace App.Db
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime? CreatedDate { get; set; }
-        public DateTime? CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? UpdatedDate { get; set; }
-        public DateTime? UpdatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
 

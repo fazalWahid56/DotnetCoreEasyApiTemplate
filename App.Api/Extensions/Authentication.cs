@@ -1,5 +1,7 @@
 ﻿using App.Identity;
+using App.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,7 @@ namespace App.Api.Extensions
 
         public static IServiceCollection UseIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
@@ -43,6 +45,9 @@ namespace App.Api.Extensions
                     ValidateIssuerSigningKey = true
                 };
             });
+
+            //helper to get user claim in business logic
+            services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             return services;
         }
     }

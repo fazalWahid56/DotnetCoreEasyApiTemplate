@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using System.Collections.Generic;
 using App.Services.GeneralLeadger;
+using Microsoft.EntityFrameworkCore;
+using App.Db;
 
 namespace App.Services.Tests
 {
@@ -23,9 +25,17 @@ namespace App.Services.Tests
         private VoucherType _voucherType;
         private VoucherTypeDTO _voucherTypeDTO;
 
+        private AppDbContext context;
+
         [TestInitialize]
         public void SetUp()
         {
+            DbContextOptions<AppDbContext> options;
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+           // builder.UseInMemoryDatabase();
+            options = builder.Options;
+            context = new AppDbContext(options);
+
             if (_mapper == null)
             {
                 var mappingConfig = new MapperConfiguration(mc =>

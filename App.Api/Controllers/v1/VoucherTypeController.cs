@@ -1,8 +1,11 @@
 ﻿using App.Entites.DTO;
 using App.Services;
 using App.Services.GeneralLeadger;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,6 +14,7 @@ namespace App.Api.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VoucherTypeController : ControllerBase
     {
         private readonly IVoucherService _vouchTypeService;
@@ -21,6 +25,7 @@ namespace App.Api.Controllers.v1
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+         
             return Ok(await _vouchTypeService.GetAllVoucherTypesAsync());
         }
 
@@ -36,7 +41,7 @@ namespace App.Api.Controllers.v1
         public async Task<IActionResult> Post([FromBody] VoucherTypeDTO value)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 var acc = await _vouchTypeService.CreateVoucherTypeAsync(value);
                 // Return 201
                 return new ObjectResult(acc) { StatusCode = StatusCodes.Status201Created };

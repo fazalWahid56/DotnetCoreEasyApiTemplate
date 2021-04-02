@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace App.Db.Tables
 {
@@ -19,6 +16,9 @@ namespace App.Db.Tables
         [ForeignKey("AccountNatureId")]
         public int AccountNatureId { get; set; }
         public AccountNature AccountNature { get; set; }
+        [ForeignKey("FirmId")]
+        public int? FirmId { get; set; }
+        public Firm Firm { get; set; }
 
     }
 }
