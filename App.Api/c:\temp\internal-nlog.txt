@@ -1,5 +1,0 @@
-2023-01-22 12:48:11.9469 Info Message Template Auto Format enabled
-2023-01-22 12:48:11.9619 Info Loading assembly: NLog.Web.AspNetCore
-2023-01-22 12:48:11.9856 Info Adding target FileTarget(Name=allfile)
-2023-01-22 12:48:11.9895 Info Adding target FileTarget(Name=ownFile-web)
-2023-01-22 12:48:12.0611 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=/Users/fazalwahid/Source/RA/Core5SecureApi/App.Api/bin/Debug/net6.0/nlog.config

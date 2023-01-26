@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Fazal Wahid",
+    "classifications": [ "webApi", "MVC", "Core6","net6.0", "Angular" ],
+    "identity": "Template.Net.Api",
+    "name": "DotnetCoreEasyApi",
+    "shortName": "EasyApi",
+    "sourceName": "CoreTemplate.App",
+    "tags": {
+      "language": "C#",
+      "type": "project",
+    }
+}
