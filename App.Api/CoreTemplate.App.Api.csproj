@@ -4,8 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>80285c9e-6aa9-40d1-9c11-bcd726b60a72</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>App.Api</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'App.Api' " />
   <ItemGroup>
     <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
