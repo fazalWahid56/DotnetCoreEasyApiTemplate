@@ -7,7 +7,7 @@
     <AssemblyName>CoreTemplate.App.Api</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'CoreTemplate.App.Api6' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'CoreTemplate.App.api' " />
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
