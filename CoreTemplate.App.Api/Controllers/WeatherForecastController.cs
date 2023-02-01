@@ -1,4 +1,4 @@
-﻿namespace CoreTemplate.App.Api6.Controllers;
+﻿namespace CoreTemplate.App.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

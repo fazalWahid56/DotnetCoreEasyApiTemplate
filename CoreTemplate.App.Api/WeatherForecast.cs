@@ -1,4 +1,4 @@
-﻿namespace CoreTemplate.App.Api6;
+﻿namespace CoreTemplate.App.Api;
 
 public class WeatherForecast
 {
