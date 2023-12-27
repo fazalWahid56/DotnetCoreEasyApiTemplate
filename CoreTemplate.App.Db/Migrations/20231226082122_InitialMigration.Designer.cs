@@ -7,29 +7,34 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace CoreTemplate.App.Db.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210210120632_GeneralLedgerChequeNoCanBeNull")]
-    partial class GeneralLedgerChequeNoCanBeNull
+    [Migration("20231226082122_InitialMigration")]
+    partial class InitialMigration
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CoreTemplate.App.Db.Tables.AccountNature", b =>
                 {
                     b.Property<int>("AccountNatureId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedBy")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountNatureId"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -43,8 +48,8 @@ namespace CoreTemplate.App.Db.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -59,8 +64,9 @@ namespace CoreTemplate.App.Db.Migrations
                 {
                     b.Property<int>("AccountId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
                     b.Property<string>("AccountDescription")
                         .HasMaxLength(500)
@@ -74,18 +80,21 @@ namespace CoreTemplate.App.Db.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<DateTime?>("CreatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("FirmId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -98,17 +107,62 @@ namespace CoreTemplate.App.Db.Migrations
 
                     b.HasIndex("AccountNatureId");
 
+                    b.HasIndex("FirmId");
+
                     b.HasIndex("VoucherId");
 
                     b.ToTable("ChartOfAccounts");
+                });
+
+            modelBuilder.Entity("CoreTemplate.App.Db.Tables.Firm", b =>
+                {
+                    b.Property<int>("FirmId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FirmId"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("FirmId");
+
+                    b.ToTable("Firm");
                 });
 
             modelBuilder.Entity("CoreTemplate.App.Db.Tables.GeneralLedger", b =>
                 {
                     b.Property<int>("TransectionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransectionId"));
 
                     b.Property<int?>("AgainstAccountId")
                         .HasColumnType("int");
@@ -120,8 +174,8 @@ namespace CoreTemplate.App.Db.Migrations
                     b.Property<decimal>("CrAmmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("CreatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -129,6 +183,9 @@ namespace CoreTemplate.App.Db.Migrations
 
                     b.Property<decimal>("DrAmmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("FirmId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("FromAccountId")
                         .HasColumnType("int");
@@ -145,8 +202,8 @@ namespace CoreTemplate.App.Db.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("UpdatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -159,6 +216,8 @@ namespace CoreTemplate.App.Db.Migrations
 
                     b.HasIndex("AgainstAccountId");
 
+                    b.HasIndex("FirmId");
+
                     b.HasIndex("FromAccountId");
 
                     b.HasIndex("VoucherId");
@@ -170,14 +229,15 @@ namespace CoreTemplate.App.Db.Migrations
                 {
                     b.Property<int>("VoucherId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoucherId"));
 
                     b.Property<decimal>("Ammount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("CreatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -190,6 +250,9 @@ namespace CoreTemplate.App.Db.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<int?>("FirmId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -197,8 +260,8 @@ namespace CoreTemplate.App.Db.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("UpdatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -218,6 +281,8 @@ namespace CoreTemplate.App.Db.Migrations
 
                     b.HasKey("VoucherId");
 
+                    b.HasIndex("FirmId");
+
                     b.HasIndex("VoucherTypeId");
 
                     b.ToTable("Vouchers");
@@ -227,11 +292,12 @@ namespace CoreTemplate.App.Db.Migrations
                 {
                     b.Property<int>("VoucherTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedBy")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoucherTypeId"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -249,8 +315,8 @@ namespace CoreTemplate.App.Db.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("UpdatedBy")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -269,11 +335,17 @@ namespace CoreTemplate.App.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoreTemplate.App.Db.Tables.Firm", "Firm")
+                        .WithMany()
+                        .HasForeignKey("FirmId");
+
                     b.HasOne("CoreTemplate.App.Db.Tables.Voucher", null)
                         .WithMany("ChartOfAccount")
                         .HasForeignKey("VoucherId");
 
                     b.Navigation("AccountNature");
+
+                    b.Navigation("Firm");
                 });
 
             modelBuilder.Entity("CoreTemplate.App.Db.Tables.GeneralLedger", b =>
@@ -281,6 +353,10 @@ namespace CoreTemplate.App.Db.Migrations
                     b.HasOne("CoreTemplate.App.Db.Tables.ChartOfAccount", "AgainstAccount")
                         .WithMany()
                         .HasForeignKey("AgainstAccountId");
+
+                    b.HasOne("CoreTemplate.App.Db.Tables.Firm", "Firm")
+                        .WithMany()
+                        .HasForeignKey("FirmId");
 
                     b.HasOne("CoreTemplate.App.Db.Tables.ChartOfAccount", "FromAccount")
                         .WithMany()
@@ -294,6 +370,8 @@ namespace CoreTemplate.App.Db.Migrations
 
                     b.Navigation("AgainstAccount");
 
+                    b.Navigation("Firm");
+
                     b.Navigation("FromAccount");
 
                     b.Navigation("Voucher");
@@ -301,11 +379,17 @@ namespace CoreTemplate.App.Db.Migrations
 
             modelBuilder.Entity("CoreTemplate.App.Db.Tables.Voucher", b =>
                 {
+                    b.HasOne("CoreTemplate.App.Db.Tables.Firm", "Firm")
+                        .WithMany()
+                        .HasForeignKey("FirmId");
+
                     b.HasOne("CoreTemplate.App.Db.Tables.VoucherType", "VoucherType")
                         .WithMany("Voucher")
                         .HasForeignKey("VoucherTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Firm");
 
                     b.Navigation("VoucherType");
                 });
